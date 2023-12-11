@@ -1,0 +1,7 @@
+
+It is possible to test fetching and unpacking the upstream sources by the new ebuild,
+using the ebuild command:
+
+> user $GENTOO_MIRRORS="" ebuild ./scrub-2.6.1.ebuild manifest clean unpack
+
+This should download and unpack the source tarball, without error, as in the example output. 
