@@ -82,6 +82,9 @@
 #define ZOOM_RESET_ACCEL_DEF "<Primary><Shift>parenright"
 
 /* User preferences. */
+
+extern char *cmdline_config;    /* defined in lxterminal.c */
+
 typedef struct _setting {
 
     GKeyFile * keyfile;         /* Pointer to GKeyFile containing settings */

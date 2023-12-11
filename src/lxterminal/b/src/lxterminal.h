@@ -79,6 +79,7 @@ typedef struct _term {
 typedef struct _command_arguments {
     char * executable;              /* Value of argv[0]; points into argument vector */
     gchar * * command;              /* Value of -e, --command; memory allocated by glib */
+    gchar * * config;               /* Value of -c, --config; memory allocated by glib */
     int geometry_bitmask;
     unsigned int geometry_columns;           /* Value of --geometry */
     unsigned int geometry_rows;

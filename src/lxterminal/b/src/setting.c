@@ -333,9 +333,16 @@ Setting * load_setting()
     gchar * user_config_path = g_build_filename(dir, "lxterminal.conf", NULL);
     g_free(dir);
     gchar * system_config_path = g_strdup(PACKAGE_DATA_DIR "/lxterminal/lxterminal.conf");
-    gchar * config_path = user_config_path;
+/*    gchar * config_path = user_config_path; */
+    gchar * config_path = cmdline_config;
     
     gboolean need_save = FALSE;
+
+    if ( ! g_file_test(cmdline_config, G_FILE_TEST_EXISTS))
+    {
+        /* invalid config file provided, try user config! */
+        config_path = user_config_path;
+    }
 
     if ( ! g_file_test(user_config_path, G_FILE_TEST_EXISTS))
     {

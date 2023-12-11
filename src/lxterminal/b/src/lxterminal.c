@@ -44,6 +44,9 @@
 #include "preferences.h"
 #include "unixsocket.h"
 
+/* command line config hack, declared external in settings.h */
+gchar *cmdline_config = NULL;
+
 /* Utilities. */
 static void terminal_get_border(Term * term, GtkBorder * border);
 static void terminal_save_size(LXTerminal * terminal);
@@ -1457,6 +1460,29 @@ gboolean lxterminal_process_arguments(gint argc, gchar * * argv, CommandArgument
             cmd_len ++;
         }
 
+	/* --config=<fname> */
+        else if (strncmp(argument, "--config=", 9) == 0)
+        {
+            g_strfreev(arguments->config);
+            g_shell_parse_argv(&argument[9], &cmd_len, &arguments->config, NULL);
+            cmdline_config = arguments->config[0];
+        }
+        else if ((strcmp, "--config") == 0 || (strcmp(argument, "-c") == 0))
+        {
+            if (arguments->config != NULL) g_strfreev(arguments->config);
+            cmd_len = 0;
+            arguments->config = g_malloc(argc * sizeof(gchar *));
+            while (argc > 1)
+            {
+                argc--;
+                argv_cursor++;
+                arguments->config[cmd_len++] = g_strdup(*argv_cursor);
+            }
+            arguments->config[cmd_len] = NULL;
+            cmdline_config = arguments->config[0];
+            cmd_len = 0;
+        }
+
         /* --geometry=<columns>x<rows> */
         else if (strncmp(argument, "--geometry=", 11) == 0)
         {
@@ -1528,7 +1554,7 @@ gboolean lxterminal_process_arguments(gint argc, gchar * * argv, CommandArgument
         else {
             printf("%s\n", usage_display);
             return FALSE;
-    }
+        }
     }
     /* Handle --loginshell. */
     if (arguments->command != NULL && cmd_len <= 2) {
