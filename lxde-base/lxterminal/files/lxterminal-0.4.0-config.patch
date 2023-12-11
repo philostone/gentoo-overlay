@@ -1,8 +1,8 @@
 Adding from command line user provided config file option
 Patch by stenosophy.github.io
 
---- src/lxterminal.c
-+++ src/lxterminal.c
+--- a/src/lxterminal.c
++++ b/src/lxterminal.c
 @@ -44,6 +44,9 @@
  #include "preferences.h"
  #include "unixsocket.h"
@@ -52,8 +52,8 @@ Patch by stenosophy.github.io
      }
      /* Handle --loginshell. */
      if (arguments->command != NULL && cmd_len <= 2) {
---- src/lxterminal.h
-+++ src/lxterminal.h
+--- a/src/lxterminal.h
++++ b/src/lxterminal.h
 @@ -79,6 +79,7 @@ typedef struct _term {
  typedef struct _command_arguments {
      char * executable;              /* Value of argv[0]; points into argument vector */
@@ -62,8 +62,8 @@ Patch by stenosophy.github.io
      int geometry_bitmask;
      unsigned int geometry_columns;           /* Value of --geometry */
      unsigned int geometry_rows;
---- src/setting.c
-+++ src/setting.c
+--- a/src/setting.c
++++ b/src/setting.c
 @@ -333,10 +333,17 @@ Setting * load_setting()
      gchar * user_config_path = g_build_filename(dir, "lxterminal.conf", NULL);
      g_free(dir);
@@ -83,8 +83,8 @@ Patch by stenosophy.github.io
      if ( ! g_file_test(user_config_path, G_FILE_TEST_EXISTS))
      {
          /* Load system-wide settings. */
---- src/setting.h
-+++ src/setting.h
+--- a/src/setting.h
++++ b/src/setting.h
 @@ -82,6 +82,9 @@
  #define ZOOM_RESET_ACCEL_DEF "<Primary><Shift>parenright"
  

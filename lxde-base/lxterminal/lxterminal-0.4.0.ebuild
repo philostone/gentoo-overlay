@@ -22,9 +22,6 @@ DEPEND="
 	x11-libs/pango
 	x11-libs/vte:2.91
 "
-#RDEPEND="${DEPEND}
-#	!lxde-base/lxterminal
-#"
 
 BDEPEND="
 	>=dev-util/intltool-0.40.0
