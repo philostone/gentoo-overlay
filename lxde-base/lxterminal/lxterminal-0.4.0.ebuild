@@ -34,7 +34,6 @@ PATCHES=(
 )
 
 src_prepare() {
-	default
 	xdg_src_prepare
 
 	# Avoid maintainer mode, bug #818211
