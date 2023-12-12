@@ -29,11 +29,13 @@ BDEPEND="
 	virtual/pkgconfig
 "
 
-PATCHES=(
-	"${FILESDIR}"/${P}-config.patch
-)
+#PATCHES=(
+#	"${FILESDIR}"/${P}-config.patch
+#)
 
 src_prepare() {
+	eapply "${FILESDIR}/${P}-config.patch"
+	eapply_user
 	xdg_src_prepare
 
 	# Avoid maintainer mode, bug #818211
