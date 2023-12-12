@@ -1,0 +1,9 @@
+
+git diff --no-index old-path/root new-path/root > patchfile
+-->	-- a/old-path/root/*
+	-- b/new-path/root/*
+
+sed -i 's/old-path\///' patchfile
+sed -i 's/new-path\///' patchfile
+-->	-- a/root/*
+	-- b/root/*

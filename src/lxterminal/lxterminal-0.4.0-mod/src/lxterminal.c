@@ -117,6 +117,7 @@ static gchar usage_display[] = {
     "  lxterminal [Options...] - LXTerminal is a terminal emulator\n\n"
     "Options:\n"
     "  -e, --command=STRING             Execute the argument to this option inside the terminal\n"
+    "  -c, --config=FNAME               Use file FNAME instead of user or system default\n"
     "  --geometry=COLUMNSxROWS          Set the terminal's size\n"
     "  -l, --loginshell                 Execute login shell\n"
     "  -t, -T, --title=,\n"
