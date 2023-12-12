@@ -45,7 +45,7 @@
 #include "unixsocket.h"
 
 /* command line config hack, declared external in settings.h */
-gchar *cmdline_config = NULL;
+gchar * cmdline_config = NULL;
 
 /* Utilities. */
 static void terminal_get_border(Term * term, GtkBorder * border);
@@ -1428,6 +1428,8 @@ gboolean lxterminal_process_arguments(gint argc, gchar * * argv, CommandArgument
 
     char * * argv_cursor = argv;
     gint cmd_len;
+
+    printf("lxterminal, cmdline_config is '%p' before processing of arguments\n", cmdline_config);
 
     while (argc > 1)
     {
