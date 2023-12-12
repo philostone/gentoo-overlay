@@ -170,7 +170,7 @@ void set_setting(Setting * new_setting)
 void save_setting()
 {
     /* do not save to command line config */
-    if (cmdline_config)
+    if ( cmdline_config != NULL )
     {
         printf("lxterminal, no saving of potentially altered config settings to command line config file\n");
         return;
@@ -358,11 +358,11 @@ Setting * load_setting()
         need_save = TRUE;
     }
     if ( config_path == cmdline_config )
-        printf("lxterminal, using command line config\n");
+        printf("lxterminal, using command line config '%s'\n", config_path);
     else if ( config_path == user_config_path )
-        printf("lxterminal, using user config\n");
+        printf("lxterminal, using user config '%s'\n", config_path);
     else
-        printf("lxterminal, using system config\n");
+        printf("lxterminal, using system config '%s'\n", config_path);
 
     /* Allocate structure. */
     setting = g_slice_new0(Setting);

@@ -1464,24 +1464,15 @@ gboolean lxterminal_process_arguments(gint argc, gchar * * argv, CommandArgument
 	/* --config=<fname> */
         else if (strncmp(argument, "--config=", 9) == 0)
         {
-            g_strfreev(arguments->config);
-            g_shell_parse_argv(&argument[9], &cmd_len, &arguments->config, NULL);
-            cmdline_config = arguments->config[0];
+            cmdline_config = &argument[9];
+            printf("lxterminal, --config='%s'\n", cmdline_config);
         }
         else if ((strcmp, "--config") == 0 || (strcmp(argument, "-c") == 0))
         {
-            if (arguments->config != NULL) g_strfreev(arguments->config);
-            cmd_len = 0;
-            arguments->config = g_malloc(argc * sizeof(gchar *));
-            while (argc > 1)
-            {
-                argc--;
-                argv_cursor++;
-                arguments->config[cmd_len++] = g_strdup(*argv_cursor);
-            }
-            arguments->config[cmd_len] = NULL;
-            cmdline_config = arguments->config[0];
-            cmd_len = 0;
+            argc --;
+            argv_cursor ++;
+            cmdline_config = *argv_cursor;
+            printf("lxterminal, -c|--config '%s'\n", cmdline_config);
         }
 
         /* --geometry=<columns>x<rows> */
