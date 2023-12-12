@@ -72,7 +72,7 @@ index 328c743..15e7304 100644
      unsigned int geometry_columns;           /* Value of --geometry */
      unsigned int geometry_rows;
 diff --git a/src/setting.c b/src/setting.c
-index 2763273..d8e4c04 100644
+index 2763273..064523b 100644
 --- a/src/setting.c
 +++ b/src/setting.c
 @@ -169,6 +169,13 @@ void set_setting(Setting * new_setting)
@@ -89,7 +89,7 @@ index 2763273..d8e4c04 100644
      int i;
      g_return_if_fail (setting != NULL);
      //print_setting();
-@@ -333,16 +340,30 @@ Setting * load_setting()
+@@ -333,16 +340,32 @@ Setting * load_setting()
      gchar * user_config_path = g_build_filename(dir, "lxterminal.conf", NULL);
      g_free(dir);
      gchar * system_config_path = g_strdup(PACKAGE_DATA_DIR "/lxterminal/lxterminal.conf");
@@ -103,25 +103,27 @@ index 2763273..d8e4c04 100644
 +    if ( cmdline_config && ! g_file_test(cmdline_config, G_FILE_TEST_EXISTS))
 +    {
 +        /* invalid config file provided, try user config! */
++        printf("lxterminal, load_setting() - invalid cmdline_config '%s', ignoring!\n", cmdline_config);
 +        config_path = user_config_path;
 +    }
-+
      if ( ! g_file_test(user_config_path, G_FILE_TEST_EXISTS))
      {
          /* Load system-wide settings. */
          config_path = system_config_path;
          need_save = TRUE;
      }
-+    if ( config_path == cmdline_config )
-+        printf("lxterminal, using command line config '%s'\n", config_path);
++    printf("lxterminal, using ");
++    if ( cmdline_config && (config_path == cmdline_config) )
++        printf("command line ");
 +    else if ( config_path == user_config_path )
-+        printf("lxterminal, using user config '%s'\n", config_path);
++        printf("user ");
 +    else
-+        printf("lxterminal, using system config '%s'\n", config_path);
++        printf("system ");
++    printf("config '%s'\n", config_path);
  
      /* Allocate structure. */
      setting = g_slice_new0(Setting);
-@@ -551,4 +572,3 @@ color_preset_does_not_exist:
+@@ -551,4 +574,3 @@ color_preset_does_not_exist:
      //print_setting();
      return setting;
  }

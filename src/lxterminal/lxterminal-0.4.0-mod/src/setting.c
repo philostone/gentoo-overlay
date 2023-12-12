@@ -349,21 +349,23 @@ Setting * load_setting()
     if ( cmdline_config && ! g_file_test(cmdline_config, G_FILE_TEST_EXISTS))
     {
         /* invalid config file provided, try user config! */
+        printf("lxterminal, load_setting() - invalid cmdline_config '%s', ignoring!\n", cmdline_config);
         config_path = user_config_path;
     }
-
     if ( ! g_file_test(user_config_path, G_FILE_TEST_EXISTS))
     {
         /* Load system-wide settings. */
         config_path = system_config_path;
         need_save = TRUE;
     }
-    if ( config_path == cmdline_config )
-        printf("lxterminal, using command line config '%s'\n", config_path);
+    printf("lxterminal, using ");
+    if ( cmdline_config && (config_path == cmdline_config) )
+        printf("command line ");
     else if ( config_path == user_config_path )
-        printf("lxterminal, using user config '%s'\n", config_path);
+        printf("user ");
     else
-        printf("lxterminal, using system config '%s'\n", config_path);
+        printf("system ");
+    printf("config '%s'\n", config_path);
 
     /* Allocate structure. */
     setting = g_slice_new0(Setting);
