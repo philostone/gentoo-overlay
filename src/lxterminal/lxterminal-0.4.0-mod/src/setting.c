@@ -31,9 +31,8 @@
 
 #include "setting.h"
 
-
 /* Single copy setting*/
-Setting * setting;
+/* Setting * setting; */
 
 ColorPreset color_presets[] = {
     {
@@ -97,6 +96,7 @@ ColorPreset color_presets[] = {
 };
 
 /* Debug print. */
+/* needs extensive rewriting with argument, for individual settings concept deferred ... */
 #if 0
 void print_setting()
 {
@@ -152,6 +152,8 @@ void print_setting()
 }
 #endif
 
+/* not for individual settings concept */
+#if 0
 Setting * get_setting()
 {
     return setting;
@@ -165,17 +167,20 @@ void set_setting(Setting * new_setting)
     }
     setting = new_setting;
 }
+#endif
 
 /* Save settings to configuration file. */
-void save_setting()
+/* void save_setting()  - replaced for individual settings concept */
+void save_setting(Setting * setting, gchar * fname)
 {
     /* do not save to command line config */
+/* ######## not required for individual configs concept
     if ( cmdline_config != NULL )
     {
         printf("lxterminal, no saving of potentially altered config settings to command line config file\n");
         return;
     }
-
+*/
     int i;
     g_return_if_fail (setting != NULL);
     //print_setting();
@@ -251,6 +256,11 @@ void save_setting()
     g_key_file_set_string(setting->keyfile, SHORTCUT_GROUP, ZOOM_RESET_ACCEL, setting->zoom_reset_accel);
 
     /* Convert GKeyFile to text and build path to configuration file. */
+
+				
+			
+// TODO use fname
+
     gchar * file_data = g_key_file_to_data(setting->keyfile, NULL, NULL);
     gchar * config_path = g_build_filename(g_get_user_config_dir(), "lxterminal/lxterminal.conf", NULL);
 
@@ -332,7 +342,9 @@ void free_setting(Setting ** setting)
 }
 
 /* Load settings from configuration file. */
-Setting * load_setting()
+/* required for multiple settings concept */
+/* Setting * load_setting() */
+Setting * load_setting(Setting * setting, gchar * fname)
 {
     int i;
     gchar * dir = g_build_filename(g_get_user_config_dir(), "lxterminal" , NULL);
@@ -572,7 +584,8 @@ color_preset_does_not_exist:
 
     if (need_save)
     {
-        save_setting();
+/*        save_setting(); */
+        save_setting(setting, fname);
     }
     //print_setting();
     return setting;

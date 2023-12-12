@@ -44,7 +44,7 @@
 #include "preferences.h"
 #include "unixsocket.h"
 
-/* command line config hack, declared external in settings.h */
+/* command line config hack, declared external in setting.h */
 gchar * cmdline_config = NULL;
 
 /* Utilities. */
@@ -1464,15 +1464,15 @@ gboolean lxterminal_process_arguments(gint argc, gchar * * argv, CommandArgument
 	/* --config=<fname> */
         else if (strncmp(argument, "--config=", 9) == 0)
         {
-            cmdline_config = &argument[9];
-            printf("lxterminal, --config='%s'\n", cmdline_config);
+            arguments->config = &argument[9];
+            printf("lxterminal, --config='%s'\n", arguments->config);
         }
         else if ((strcmp, "--config") == 0 || (strcmp(argument, "-c") == 0))
         {
             argc --;
             argv_cursor ++;
-            cmdline_config = *argv_cursor;
-            printf("lxterminal, -c|--config '%s'\n", cmdline_config);
+            arguments->config = *argv_cursor;
+            printf("lxterminal, -c|--config '%s'\n", arguments->config);
         }
 
         /* --geometry=<columns>x<rows> */
@@ -1925,6 +1925,50 @@ int main(gint argc, gchar * * argv)
         return 0;
 
     /* Load user preferences. */
+    gchar * fn = "lxterminal: ";
+    gchar * dir = g_build_filename(g_get_user_config_dir(), "lxterminal", NULL);
+    g_mkdir_with_parents(dir, S_IRUSR | S_IWUSR | S_IXUSR);
+    gchar * user_config = g_build_filename(dir, "lxterminal.conf", NULL);
+    g_free(dir);
+    gchar * system_config = g_strdup(PACKAGE_DATA_DIR "/lxterminal/lxterminal.conf");
+    printf("%s - load config settings, in priority order if existing\n", fn);
+    printf("%s - cmdline_config '%s'\n", fn, arguments->config);
+    printf("%s - user_config    '%s'\n", fn, user_config);
+    printf("%s - system_config  '%s'\n", fn, system_config);
+
+			
+		
+    gchar * cmdline_config = arguments->config;
+    arguments->config = (cmdline_config) ?: user_config;
+    if ( cmdline_config )
+    {
+        if ( ! g_file_test(cmdline_config, G_FILE_TEST_EXISTS))
+        {
+            printf("%s - command line config file '%s' does not extist, ignoring!\n", cmdline_config);
+            arguments->config = user_config;
+        }
+    }
+    else
+    {
+        arguments->config = NULL
+    }
+    if ( ! arguments->config
+
+
+
+    if ( cmdline_config && ! g_file_test(cmdline_config, G_FILE_TEST_EXISTS))
+    {
+        printf("%s - command line config file '%s' does not extist, ignoring!\n", arguments->config);
+        config = user_config;
+    }
+    if ( ! g_file_test
+
+
+    gchar * config = (arguments->config) ?: user_config;
+    if ( argumen
+			
+			
+//TODO differ between root window and subsequent ones... ???????????
     load_setting();
     
     /* Finish initializing the impure area and start the first LXTerminal. */
