@@ -169,6 +169,13 @@ void set_setting(Setting * new_setting)
 /* Save settings to configuration file. */
 void save_setting()
 {
+    /* do not save to command line config */
+    if (cmdline_config)
+    {
+        printf("lxterminal, no saving of potentially altered config settings to command line config file\n");
+        return;
+    }
+
     int i;
     g_return_if_fail (setting != NULL);
     //print_setting();
@@ -338,7 +345,7 @@ Setting * load_setting()
     
     gboolean need_save = FALSE;
 
-    if ( ! g_file_test(cmdline_config, G_FILE_TEST_EXISTS))
+    if ( cmdline_config && ! g_file_test(cmdline_config, G_FILE_TEST_EXISTS))
     {
         /* invalid config file provided, try user config! */
         config_path = user_config_path;
@@ -350,6 +357,12 @@ Setting * load_setting()
         config_path = system_config_path;
         need_save = TRUE;
     }
+    if ( config_path == cmdline_config )
+        printf("lxterminal, using command line config\n");
+    else if ( config_path == user_config_path )
+        printf("lxterminal, using user config\n");
+    else
+        printf("lxterminal, using system config\n");
 
     /* Allocate structure. */
     setting = g_slice_new0(Setting);
@@ -558,4 +571,3 @@ color_preset_does_not_exist:
     //print_setting();
     return setting;
 }
-
