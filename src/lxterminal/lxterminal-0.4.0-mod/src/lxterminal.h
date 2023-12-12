@@ -29,7 +29,7 @@
 
 /* Top level application context. */
 typedef struct _lxtermwindow {
-//    Setting * setting;                /* Pointer to current user preferences */
+    Setting * setting;                /* Pointer to current user preferences */
     GPtrArray * windows;            /* Array of pointers to LXTerminal structures */
 } LXTermWindow;
 
@@ -45,6 +45,7 @@ typedef struct _lxterminal {
     GtkWidget * notebook;           /* Notebook, child of vertical box */
     GPtrArray * terms;              /* Array of pointers to Term structures */
 //    Setting * setting;                /* A copy of parent->setting */
+    Setting * setting;              /* Optionally unique setting for this window, NULL if same as top level */
     GdkGeometry geometry;           /* Geometry hints (see XGetWMNormalHints) */
     GdkWindowHints geometry_mask;       /* Mask of valid data in geometry hints */
     gboolean rgba;              /* True if colormap is RGBA */

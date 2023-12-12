@@ -83,7 +83,8 @@
 
 /* User preferences. */
 
-extern char *cmdline_config;    /* defined in lxterminal.c */
+/* new individual settings concept */
+/* extern char *cmdline_config; */   /* defined in lxterminal.c */
 
 typedef struct _setting {
 
@@ -149,16 +150,22 @@ typedef struct _colorpreset {
     const char * palette[16];
 } ColorPreset;
 
+#if 0
 extern Setting * get_setting();
 extern void save_setting();
 extern Setting * load_setting();
+#endif
+extern void save_setting(Setting * setting, gchar * fname);
+extern Setting * load_setting(Setting * setting, gchar * fname);
 
 /* Utils for chsnge setting through preference */
 extern void set_setting(Setting * setting);
 extern void free_setting(Setting ** setting);
 extern Setting * copy_setting(Setting * setting);
 
+#if 0
 extern void print_setting();
+#endif
 
 extern ColorPreset color_presets[];
 
