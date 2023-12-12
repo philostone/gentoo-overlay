@@ -341,8 +341,11 @@ Setting * load_setting()
     g_free(dir);
     gchar * system_config_path = g_strdup(PACKAGE_DATA_DIR "/lxterminal/lxterminal.conf");
 /*    gchar * config_path = user_config_path; */
-    printf("lxterminal, load_setting(), cmdline_config is '%p' before loading\n", cmdline_config);
-    gchar * config_path = cmdline_config;
+    printf("lxterminal, load_setting() - in priority order if existing\n");
+    printf("lxterminal, load_setting() - cmdline_config '%s'\n", cmdline_config);
+    printf("lxterminal, load_setting() - user_config    '%s'\n", user_config_path);
+    printf("lxterminal, load_setting() - system config  '%s'\n", system_config_path);
+    gchar * config_path = (cmdline_config) ?: user_config_path;
     
     gboolean need_save = FALSE;
 

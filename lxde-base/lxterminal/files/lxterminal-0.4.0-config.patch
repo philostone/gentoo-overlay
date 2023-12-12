@@ -1,5 +1,5 @@
 diff --git a/src/lxterminal.c b/src/lxterminal.c
-index 015f5e4..ea8c556 100644
+index 015f5e4..70188ec 100644
 --- a/src/lxterminal.c
 +++ b/src/lxterminal.c
 @@ -44,6 +44,9 @@
@@ -20,16 +20,7 @@ index 015f5e4..ea8c556 100644
      "  --geometry=COLUMNSxROWS          Set the terminal's size\n"
      "  -l, --loginshell                 Execute login shell\n"
      "  -t, -T, --title=,\n"
-@@ -1425,6 +1429,8 @@ gboolean lxterminal_process_arguments(gint argc, gchar * * argv, CommandArgument
-     char * * argv_cursor = argv;
-     gint cmd_len;
- 
-+    printf("lxterminal, cmdline_config is '%p' before processing of arguments\n", cmdline_config);
-+
-     while (argc > 1)
-     {
-         argc --;
-@@ -1457,6 +1463,20 @@ gboolean lxterminal_process_arguments(gint argc, gchar * * argv, CommandArgument
+@@ -1457,6 +1461,20 @@ gboolean lxterminal_process_arguments(gint argc, gchar * * argv, CommandArgument
              cmd_len ++;
          }
  
@@ -50,7 +41,7 @@ index 015f5e4..ea8c556 100644
          /* --geometry=<columns>x<rows> */
          else if (strncmp(argument, "--geometry=", 11) == 0)
          {
-@@ -1528,7 +1548,7 @@ gboolean lxterminal_process_arguments(gint argc, gchar * * argv, CommandArgument
+@@ -1528,7 +1546,7 @@ gboolean lxterminal_process_arguments(gint argc, gchar * * argv, CommandArgument
          else {
              printf("%s\n", usage_display);
              return FALSE;
@@ -72,7 +63,7 @@ index 328c743..15e7304 100644
      unsigned int geometry_columns;           /* Value of --geometry */
      unsigned int geometry_rows;
 diff --git a/src/setting.c b/src/setting.c
-index 2763273..064523b 100644
+index 2763273..16fc03d 100644
 --- a/src/setting.c
 +++ b/src/setting.c
 @@ -169,6 +169,13 @@ void set_setting(Setting * new_setting)
@@ -89,14 +80,17 @@ index 2763273..064523b 100644
      int i;
      g_return_if_fail (setting != NULL);
      //print_setting();
-@@ -333,16 +340,32 @@ Setting * load_setting()
+@@ -333,16 +340,35 @@ Setting * load_setting()
      gchar * user_config_path = g_build_filename(dir, "lxterminal.conf", NULL);
      g_free(dir);
      gchar * system_config_path = g_strdup(PACKAGE_DATA_DIR "/lxterminal/lxterminal.conf");
 -    gchar * config_path = user_config_path;
 +/*    gchar * config_path = user_config_path; */
-+    printf("lxterminal, load_setting(), cmdline_config is '%p' before loading\n", cmdline_config);
-+    gchar * config_path = cmdline_config;
++    printf("lxterminal, load_setting() - in priority order if existing\n");
++    printf("lxterminal, load_setting() - cmdline_config '%s'\n", cmdline_config);
++    printf("lxterminal, load_setting() - user_config    '%s'\n", user_config_path);
++    printf("lxterminal, load_setting() - system config  '%s'\n", system_config_path);
++    gchar * config_path = (cmdline_config) ?: user_config_path;
      
      gboolean need_save = FALSE;
  
@@ -123,7 +117,7 @@ index 2763273..064523b 100644
  
      /* Allocate structure. */
      setting = g_slice_new0(Setting);
-@@ -551,4 +574,3 @@ color_preset_does_not_exist:
+@@ -551,4 +577,3 @@ color_preset_does_not_exist:
      //print_setting();
      return setting;
  }

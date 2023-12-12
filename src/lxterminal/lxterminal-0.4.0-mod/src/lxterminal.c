@@ -1429,8 +1429,6 @@ gboolean lxterminal_process_arguments(gint argc, gchar * * argv, CommandArgument
     char * * argv_cursor = argv;
     gint cmd_len;
 
-    printf("lxterminal, cmdline_config is '%p' before processing of arguments\n", cmdline_config);
-
     while (argc > 1)
     {
         argc --;
