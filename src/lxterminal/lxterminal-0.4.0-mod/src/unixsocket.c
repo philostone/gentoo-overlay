@@ -82,15 +82,24 @@ static gboolean init(LXTermWindow* lxtermwin, gint argc, gchar** argv) {
     snprintf(sock_addr.sun_path, sizeof(sock_addr.sun_path), "%s", socket_path);
 
     /* Try to connect to an existing LXTerminal process. */
+				
+    /* if config version, which this is !!!!, always return true as a new process !!!! */
+    /* or should it be if a (different) command-line-provided config file is provided ?????*/
+				
     if (connect(fd, (struct sockaddr *) &sock_addr, sizeof(sock_addr)) == 0) {
         g_free(socket_path);
         send_msg_to_controller(fd, argc, argv);
         return FALSE;
     }
 
+				
+/* why is unlink used, no file with name socket_path is ever created ?????????? */
+/* unless created by caller, check !!! */
     unlink(socket_path);
+				
     g_free(socket_path);
     start_controller(&sock_addr, lxtermwin, fd);
+/* fd may be closed, if bind(fd...) fails ... */
     return TRUE;
 
 err_socket:
