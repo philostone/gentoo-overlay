@@ -7,7 +7,8 @@ inherit autotools xdg
 
 DESCRIPTION="Fork of the lightweight vte-based tabbed terminal emulator for LXDE - new config scheme"
 # HOMEPAGE="https://wiki.lxde.org/en/LXTerminal"
-SRC_URI="https://github.com/philostone/lxterminal-config/archive/refs/tags/${PV}.tar.xz"
+#SRC_URI="https://github.com/philostone/lxterminal-config/releases/tags/${PV}.tar.xz"
+SRC_URI="https://github.com/philostone/lxterminal-config/archive/refs/tags/0.0.1.tar.gz"
 RESTRICT="mirror"
 
 LICENSE="GPL-2"
