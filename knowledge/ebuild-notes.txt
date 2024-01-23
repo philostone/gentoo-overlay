@@ -8,5 +8,6 @@ This should download and unpack the source tarball, without error, as in the exa
 
 
 Update manifest
+use --force
 
 ebuild name.ebuild manifest
