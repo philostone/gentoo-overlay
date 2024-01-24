@@ -37,8 +37,7 @@ pkg_nofetch() {
 }
 
 src_unpack() {
-	rsync -av "${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
-		--exclude "${SRC_LOCAL_DIR}.git"
+	rsync -avC "${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
 }
 
 src_prepare() {
