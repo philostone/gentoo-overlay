@@ -37,7 +37,7 @@ pkg_nofetch() {
 }
 
 src_unpack() {
-	rsync -avC "${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
+	rsync -avC --exclude=".termpids" --exclude="stored-unused" "${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
 }
 
 src_prepare() {
