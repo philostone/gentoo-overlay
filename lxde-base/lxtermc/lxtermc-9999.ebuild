@@ -52,5 +52,5 @@ src_prepare() {
 }
 
 src_configure() {
-	econf --enable-man --enable-gtk3
+	econf --enable-man --enable-gtk3 --disable-nls
 }
