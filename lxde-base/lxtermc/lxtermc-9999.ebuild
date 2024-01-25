@@ -46,7 +46,7 @@ src_prepare() {
 	xdg_src_prepare
 
 	# Avoid maintainer mode, bug #818211
-#	rm aclocal.m4 || die
+	rm aclocal.m4 || die
 
 	eautoreconf
 }
