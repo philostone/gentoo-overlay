@@ -21,7 +21,7 @@ IUSE=""
 DEPEND="
 	dev-libs/glib:2
 	x11-libs/gdk-pixbuf:2
-	x11-libs/gtk:4
+	gui-libs/gtk:4
 	x11-libs/libX11
 	x11-libs/pango
 	x11-libs/vte:2.91
