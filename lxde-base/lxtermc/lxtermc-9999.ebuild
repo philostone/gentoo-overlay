@@ -17,17 +17,18 @@ SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~mips ~ppc ~riscv ~x86 ~amd64-linux ~x86-linux"
 IUSE=""
 
+# ste - vte 2.91 gtk -> gtk:4
 DEPEND="
 	dev-libs/glib:2
 	x11-libs/gdk-pixbuf:2
-	x11-libs/gtk+:3
+	x11-libs/gtk:4
 	x11-libs/libX11
 	x11-libs/pango
 	x11-libs/vte:2.91
 "
 
+#	>=dev-util/intltool-0.40.0
 BDEPEND="
-	>=dev-util/intltool-0.40.0
 	sys-devel/gettext
 	virtual/pkgconfig
 "
@@ -52,5 +53,7 @@ src_prepare() {
 }
 
 src_configure() {
-	econf --enable-man --enable-gtk3 --disable-nls
+# ste - disable-nls until we get things working, only gtk4
+#	econf --enable-man --enable-gtk3 --disable-nls
+	econf --enable-man --disable-nls
 }
