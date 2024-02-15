@@ -1,11 +1,11 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit autotools xdg
+inherit meson xdg
 
-DESCRIPTION="Fork of the lightweight vte-based tabbed terminal emulator for LXDE - new config scheme"
+#DESCRIPTION="Fork of the lightweight vte-based tabbed terminal emulator for LXDE - new config scheme"
 # HOMEPAGE="https://wiki.lxde.org/en/LXTerminal"
 # SRC_URI="https://github.com/philostone/${PN}/archive/refs/tags/${PV}.tar.gz -> ${PN}-${PV}.tar.gz"
 RESTRICT="mirror fetch"
@@ -38,22 +38,28 @@ pkg_nofetch() {
 }
 
 src_unpack() {
-	rsync -avC --exclude=".termpids" --exclude="files.list" --exclude="stored-unused" "${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
+	rsync -avC --exclude=".termpids" --exclude="files.list" --exclude=".git" \
+		"${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
 }
 
-src_prepare() {
+#src_prepare() {
 #	eapply "${FILESDIR}/${P}-config.patch"
 #	eapply_user
-	xdg_src_prepare
+#	xdg_src_prepare
 
 	# Avoid maintainer mode, bug #818211
 #	rm aclocal.m4 || die
 
-	eautoreconf
-}
+#	eautoreconf
+#}
 
 src_configure() {
 # ste - disable-nls until we get things working, only gtk4
 #	econf --enable-man --enable-gtk3 --disable-nls
-	econf --enable-man --disable-nls
+#	econf --enable-man --disable-nls
+	meson_src_configure
+}
+
+src_install() {
+	meson_src_install
 }
