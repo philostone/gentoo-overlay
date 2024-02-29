@@ -24,8 +24,9 @@ DEPEND="
 	gui-libs/gtk:4
 	x11-libs/libX11
 	x11-libs/pango
-	x11-libs/vte:2.91
+	gui-libs/vte
 "
+#	x11-libs/vte:2.91 - this is the gtk3 version
 
 #	>=dev-util/intltool-0.40.0
 BDEPEND="
