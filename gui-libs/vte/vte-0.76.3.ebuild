@@ -37,9 +37,10 @@ DEPEND="
 	introspection? ( >=dev-libs/gobject-introspection-1.56:= )
 	x11-libs/pango[introspection?]
 "
-RDEPEND="${DEPEND}
-	~gui-libs/vte-common-${PV}[systemd?]
-"
+#RDEPEND="${DEPEND}
+#	~gui-libs/vte-common-${PV}[systemd?]
+#"
+
 BDEPEND="
 	${PYTHON_DEPS}
 	dev-libs/libxml2:2
