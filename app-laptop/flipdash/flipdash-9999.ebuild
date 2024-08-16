@@ -22,6 +22,7 @@ DEPEND="
 	dev-libs/glib:2
 	x11-libs/gdk-pixbuf:2
 	gui-libs/gtk:4
+	gui-libs/vte:2.91-gtk4
 	x11-libs/libX11
 	x11-libs/pango
 "
