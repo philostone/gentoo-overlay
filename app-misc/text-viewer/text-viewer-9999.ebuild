@@ -10,7 +10,7 @@ inherit meson xdg
 # SRC_URI="https://github.com/philostone/${PN}/archive/refs/tags/${PV}.tar.gz -> ${PN}-${PV}.tar.gz"
 RESTRICT="mirror fetch"
 
-SRC_LOCAL_DIR="/home/ste/programming/github/text-view/"
+SRC_LOCAL_DIR="/home/ste/programming/github/text-viewer/"
 
 LICENSE="GPL-2"
 SLOT="0"
