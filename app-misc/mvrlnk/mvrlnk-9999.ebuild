@@ -14,6 +14,11 @@ RESTRICT="mirror fetch"
 SRC_LOCAL_DIR="/home/ste/programming/github/mvrlnk/"
 EBUILD_EXCLUDE="${SRC_LOCAL_DIR}ebuild.exclude"
 
+# ste - for local (copy) build setup, the file ebuild.exclude typically include (at least):
+#	ebuild.exclude
+#	.termpids
+#	files.list
+
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~mips ~ppc ~riscv ~x86 ~amd64-linux ~x86-linux"
@@ -32,16 +37,22 @@ pkg_nofetch() {
 	einfo "files are copied individually from local storage..."
 }
 
-# rsync -a -> rsycn -rlptgoD
-# old format rsync -avC
-# -C should exclude .git...
+# rsync -avC (old setup) -> rsync -rlptgoDvC (a = rlptgoD)
+# -v : verbose
+# -r : recurse
+# -l : copy symlinks as is -> use -L to follow symlinks
+# -ptgo : preserve permissions, modification times, group, owner
+# -D : preserve device and special files (super user only) -> skip this
+# -C : exclude CVS, should exclude .git...
+src_unpack() {
+	rsync -vrLptgoC --exclude-from="${EBUILD_EXCLUDE}" "${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
+}
+
+# old implementation
 #src_unpack() {
 #	rsync -vrptgoCL --exclude=".termpids" --exclude="files.list" --exclude=".git" \
 #		"${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
 #}
-src_unpack() {
-	rsync -vrptgoCL --exclude-from="${EBUILD_EXCLUDE}" "${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
-}
 
 #src_prepare() {
 #	eapply "${FILESDIR}/${P}-config.patch"
