@@ -31,8 +31,11 @@ pkg_nofetch() {
 	einfo "files are copied individually from local storage..."
 }
 
+# rsync -a -> rsycn -rlptgoD
+# old format rsync -avC
+# -C should exclude .git...
 src_unpack() {
-	rsync -avC --exclude=".termpids" --exclude="files.list" --exclude=".git" \
+	rsync -vrptgoCL --exclude=".termpids" --exclude="files.list" --exclude=".git" \
 		"${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
 }
 
