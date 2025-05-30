@@ -12,6 +12,7 @@ DESCRIPTION="Move and relink files"
 RESTRICT="mirror fetch"
 
 SRC_LOCAL_DIR="/home/ste/programming/github/mvrlnk/"
+EBUILD_EXCLUDE="${SRC_LOCAL_DIR}ebuild.exclude"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -34,9 +35,12 @@ pkg_nofetch() {
 # rsync -a -> rsycn -rlptgoD
 # old format rsync -avC
 # -C should exclude .git...
+#src_unpack() {
+#	rsync -vrptgoCL --exclude=".termpids" --exclude="files.list" --exclude=".git" \
+#		"${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
+#}
 src_unpack() {
-	rsync -vrptgoCL --exclude=".termpids" --exclude="files.list" --exclude=".git" \
-		"${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
+	rsync -vrptgoCL --exclude-from="${EBUILD_EXCLUDE}" "${SRC_LOCAL_DIR}" "${WORKDIR}/${P}/"
 }
 
 #src_prepare() {
