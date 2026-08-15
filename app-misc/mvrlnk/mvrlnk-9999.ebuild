@@ -22,7 +22,7 @@ EBUILD_EXCLUDE="${SRC_LOCAL_DIR}ebuild.exclude"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~mips ~ppc ~riscv ~x86 ~amd64-linux ~x86-linux"
-IUSE=""
+IUSE="debug"
 
 # ste - vte 2.91 gtk -> gtk:4
 #DEPEND="
@@ -69,6 +69,7 @@ src_configure() {
 # ste - disable-nls until we get things working, only gtk4
 #	econf --enable-man --enable-gtk3 --disable-nls
 #	econf --enable-man --disable-nls
+	use debug && EMESON_BUILDTYPE=debug
 	meson_src_configure
 }
 
