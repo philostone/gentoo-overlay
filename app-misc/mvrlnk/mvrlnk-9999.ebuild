@@ -47,7 +47,7 @@ src_configure() {
 	if use debug ; then
 		filter-flags -O2
 		append-flags -g -ggdb
-		append-ldflags -g -ggdg
+#		append-ldflags -g -ggdg
 		EMESON_BUILDTYPE=debug
 	fi
 	local emesonargs=(
