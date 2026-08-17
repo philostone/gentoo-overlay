@@ -7,7 +7,7 @@ inherit meson flag-o-matic
 
 DESCRIPTION="Move and relink files"
 # HOMEPAGE="https://philostone.github.io"
-# SRC_URI="https://github.com/philostone/${PN}/archive/refs/tags/${PV}.tar.gz -> ${PN}-${PV}.tar.gz"
+SRC_URI="https://github.com/philostone/${PN}/archive/refs/tags/${PV}.tar.gz -> ${PN}-${PV}.tar.gz"
 RESTRICT="mirror fetch"
 
 SRC_LOCAL_DIR="/home/ste/programming/github/mvrlnk/"
@@ -28,6 +28,7 @@ BDEPEND="
 "
 
 pkg_nofetch() {
+	# not called without SRC_URI
 	einfo "files are copied individually from local storage..."
 }
 
