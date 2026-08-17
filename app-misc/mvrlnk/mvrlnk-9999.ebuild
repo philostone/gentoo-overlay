@@ -32,6 +32,10 @@ pkg_nofetch() {
 	einfo "files are copied individually from local storage..."
 }
 
+pkg_setup() {
+	einfo "mvrlnk: local development ebuild ..."
+}
+
 # rsync -avC (old setup) -> rsync -rlptgoDvC (a = rlptgoD)
 # -v : verbose
 # -r : recurse
